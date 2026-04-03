@@ -16,7 +16,7 @@ on:
         required: true
         type: string
       platform_arm:
-        description: "Use ARM platform (true = manylinux_2_17_aarch64, false = manylinux_2_17_x86_64)"
+        description: "Use ARM platform (true = manylinux_2_24_aarch64, false = manylinux_2_24_x86_64)"
         required: true
         default: "false"
 
@@ -34,20 +34,20 @@ jobs:
       - name: Resolve platform
         run: |
           if [ "${{ inputs.platform_arm }}" = "true" ]; then
-            echo "PIP_PLATFORM=manylinux_2_17_aarch64" >> "$GITHUB_ENV"
+            echo "PIP_PLATFORM=manylinux_2_24_aarch64" >> "$GITHUB_ENV"
             echo "PACKAGE_SUFFIX=offline-arm" >> "$GITHUB_ENV"
           else
-            echo "PIP_PLATFORM=manylinux_2_17_x86_64" >> "$GITHUB_ENV"
+            echo "PIP_PLATFORM=manylinux_2_24_x86_64" >> "$GITHUB_ENV"
             echo "PACKAGE_SUFFIX=offline" >> "$GITHUB_ENV"
           fi
 
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.14
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: "3.14"
+          python-version: "3.12"
 
       - name: Make plugin_repackaging.sh executable
         run: chmod +x ./plugin_repackaging.sh
